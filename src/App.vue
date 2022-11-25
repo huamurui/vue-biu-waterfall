@@ -5,8 +5,8 @@ import WaterfallConfig from './components/WaterfallConfig.vue'
 import WaterfallCell from './components/WaterfallCell.vue'
 
 import ItemFactory from './mock/ItemFactory'
-
-let items = ItemFactory.get(50)
+import { ref, reactive, onUnmounted, } from 'vue'
+let items = reactive(ItemFactory.get(50))
 const config = {
   interval: 200,
   lineGap: 250,
@@ -15,11 +15,15 @@ const config = {
   singleMaxWidth: 300,
 }
 
+const reflow = () => {
+  items.push(...ItemFactory.get(50))
+}
+
 </script>
 
 <template>
   <div>
-    <WaterfallConfig :waterfallConfig="config">
+    <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
         <div :style="item.style"> {{ item }} lala </div>
       </WaterfallCell>
