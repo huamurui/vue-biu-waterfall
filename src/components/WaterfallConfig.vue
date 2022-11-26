@@ -1,19 +1,23 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
 import getLayoutStrategy from "../utils/getLayoutStrategy";
-
-
+import { mediatorRects, setRect } from "./useWaterStore";
 const props = defineProps<{ waterfallConfig: WaterfallConfig }>()
 const emit = defineEmits<{
   (event: 'scrollToBottom'): void
-  (event: 'getWidth', columnWidth: number): void
 }>()
 
 let layout = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig)
-
 let columnCount = layout.count
 let columnWidth = layout.width[0]
 let columnHeights = []
+
+
+const getAdaptedRect = () => {
+  console.log(mediatorRects)
+}
+
+
 
 
 
@@ -23,8 +27,8 @@ const getLayout = () => {
 }
 const onResize = () => {
   getLayout()
-  emit('getWidth', columnWidth)
-  console.log(layout)
+  setRect(layout.width[0])
+  console.log(layout.width[0])
 }
 const onScroll = () => {
   console.log(document.body.scrollTop)
@@ -43,6 +47,9 @@ onMounted(() => {
 onUnmounted(() => {
   removeEventListener('resize', onResize)
   removeEventListener('scroll', onScroll)
+})
+onBeforeUpdate(() => {
+  getAdaptedRect()
 })
 
 

@@ -1,3 +1,4 @@
+//scale the rect to fit the layout
 export default function getAdaptedRect(metaRect: Rectangle, adaptedWidth: number) {
   const { width, height, left, top } = metaRect
   const rect = {

@@ -1,49 +1,33 @@
 <script setup lang="ts">
 import getAdaptedRect from "../utils/getAdaptedRect"
+import { mediatorRects, getRect } from "./useWaterStore";
 import { reactive, watch, onBeforeMount } from 'vue'
 const props = defineProps<{
   waterCell: WaterfallCell
-  adaptedWidth: number
-}>()
-const emit = defineEmits<{
-  // (event: 'getWidth'): void
 }>()
 
-console.log(props.adaptedWidth)
 
 let metaRect = {
   index: props.waterCell.index,
   width: props.waterCell.width,
   height: props.waterCell.height,
-  top: 0,
-  left: 0
+  style: ''
 }
+getRect(metaRect)
 
-let adaptedRect = getAdaptedRect(metaRect, props.adaptedWidth)
-props.waterCell.style = {
-  background: props.waterCell.style.background,
-  width: adaptedRect.width + 'px',
-  height: adaptedRect.height + 'px',
-}
+let adaptedRect = reactive(getAdaptedRect(mediatorRects[metaRect.index], mediatorRects[0].width))
+watch(() => mediatorRects[0].width, (newVal) => {
+  adaptedRect = getAdaptedRect(mediatorRects[0], newVal)
+  console.log('aaaa', newVal)
+  console.log(adaptedRect.width)
+})
 
-watch(
-  () => props.adaptedWidth,
-  (newVal, oldVal) => {
-    adaptedRect = getAdaptedRect(metaRect, newVal)
-    console.log('watch')
-    props.waterCell.style = {
-      background: props.waterCell.style.background,
-      width: adaptedRect.width + 'px',
-      height: adaptedRect.height + 'px',
-    }
-  }
-)
-
+//losing the response....but i am tired now
 </script>
 
 <template>
   <slot></slot>
-  <div>biu {{ adaptedRect.width }} {{ props.waterCell.style }}</div>
+  <div>{{ adaptedRect }} {{ }}</div>
 </template>
 
 <style scoped>

@@ -1,4 +1,4 @@
-// we wil get adapted single cell's width and column count here
+// we wil get single cell's adapted width and column count of layout here
 export default function getLayoutStrategy(width: number, options: WaterfallConfig) {
   let count = width / options.lineGap
   let slotWidth
@@ -25,15 +25,14 @@ export default function getLayoutStrategy(width: number, options: WaterfallConfi
       slotWidth = options.maxLineGap
     }
     if (count === 1) {
-      //如果算完了还是一列，那么宽度取最大
       slotWidth = Math.min(width, options.singleMaxWidth)
       slotWidth = Math.max(slotWidth, options.minLineGap)
     }
   }
   return {
-    width: getArrayFillWith(slotWidth, count),//元素宽度...也许是为了grow的时候方便用的，也是可以删掉...
-    count: count,//列数...重命名以下，columnCount
-    left: 0,//如果你不用的话...把这个删了吧。
+    width: getArrayFillWith(slotWidth, count),
+    count: count,
+    left: 0,
   }
 }
 
