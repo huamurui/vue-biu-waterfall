@@ -10,8 +10,8 @@ let ItemFactory = (function () {
         style: {
           background: getRandomColor()
         },
-        width: 100 + ~~(Math.random() * 50),
-        height: 100 + ~~(Math.random() * 50)
+        width: 150 + ~~(Math.random() * 50),
+        height: 220 + ~~(Math.random() * 50)
       }
     }
     return items

@@ -1,23 +1,29 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, } from 'vue'
 import getLayoutStrategy from "../utils/getLayoutStrategy";
 
 
 const props = defineProps<{ waterfallConfig: WaterfallConfig }>()
-const emit = defineEmits<{ (event: 'scrollToBottom'): void }>()
+const emit = defineEmits<{
+  (event: 'scrollToBottom'): void
+  (event: 'getWidth', columnWidth: number): void
+}>()
 
 let layout = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig)
 
 let columnCount = layout.count
 let columnWidth = layout.width[0]
+let columnHeights = []
+
 
 
 const getLayout = () => {
   layout = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig)
+  columnWidth = layout.width[0]
 }
-
 const onResize = () => {
   getLayout()
+  emit('getWidth', columnWidth)
   console.log(layout)
 }
 const onScroll = () => {
@@ -38,7 +44,6 @@ onUnmounted(() => {
   removeEventListener('resize', onResize)
   removeEventListener('scroll', onScroll)
 })
-
 
 
 

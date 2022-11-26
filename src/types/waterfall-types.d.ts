@@ -1,6 +1,8 @@
 interface WaterfallCell {
+  index: number
   width: number
   height: number
+  style: any
   // order: number
   // moveClass: string
 }
@@ -12,6 +14,8 @@ interface WaterfallConfig {
   minLineGap: number // 最小列间隔
   maxLineGap: number //最大列间隔
   singleMaxWidth: number // 单个元素的最大宽度
+  // columnWidth: number // 适应后的列宽
+
 }
 
 interface Rectangle {

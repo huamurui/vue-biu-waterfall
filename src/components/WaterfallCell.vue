@@ -1,19 +1,49 @@
 <script setup lang="ts">
+import getAdaptedRect from "../utils/getAdaptedRect"
+import { reactive, watch, onBeforeMount } from 'vue'
 const props = defineProps<{
-  waterCell: WaterfallCell;
+  waterCell: WaterfallCell
+  adaptedWidth: number
 }>()
+const emit = defineEmits<{
+  // (event: 'getWidth'): void
+}>()
+
+console.log(props.adaptedWidth)
+
 let metaRect = {
+  index: props.waterCell.index,
   width: props.waterCell.width,
   height: props.waterCell.height,
   top: 0,
   left: 0
 }
 
+let adaptedRect = getAdaptedRect(metaRect, props.adaptedWidth)
+props.waterCell.style = {
+  background: props.waterCell.style.background,
+  width: adaptedRect.width + 'px',
+  height: adaptedRect.height + 'px',
+}
+
+watch(
+  () => props.adaptedWidth,
+  (newVal, oldVal) => {
+    adaptedRect = getAdaptedRect(metaRect, newVal)
+    console.log('watch')
+    props.waterCell.style = {
+      background: props.waterCell.style.background,
+      width: adaptedRect.width + 'px',
+      height: adaptedRect.height + 'px',
+    }
+  }
+)
+
 </script>
 
 <template>
   <slot></slot>
-  <div> {{ metaRect.width }}</div>
+  <div>biu {{ adaptedRect.width }} {{ props.waterCell.style }}</div>
 </template>
 
 <style scoped>
