@@ -1,5 +1,8 @@
+// the functions here won't change the original variable
+export { getLayoutStrategy, getAdaptedRect }
+
 // we wil get single cell's adapted width and column count of layout here
-export default function getLayoutStrategy(width: number, options: WaterfallConfig) {
+const getLayoutStrategy = (width: number, options: WaterfallConfig) => {
   let count = width / options.lineGap
   let slotWidth
   if (options.singleMaxWidth >= width) {
@@ -37,6 +40,19 @@ export default function getLayoutStrategy(width: number, options: WaterfallConfi
 }
 
 
+//scale the rect to fit the layout
+const getAdaptedRect = (metaRect: Rectangle, adaptedWidth: number) => {
+  const { width, height, left, top } = metaRect
+  const rect = {
+    width: adaptedWidth,
+    height: height / width * adaptedWidth,
+    left: left,
+    top: top
+  }
+  return rect
+}
+
+
 
 
 /**
@@ -50,4 +66,6 @@ function getArrayFillWith(item: any, count: number) {
   }
   return arr
 }
+
+
 

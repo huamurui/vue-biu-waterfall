@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
-import getLayoutStrategy from "../utils/getLayoutStrategy";
 import { mediatorRects, setRect } from "./useWaterStore";
+import { getLayoutStrategy } from "../utils/calculate";
+import { adjustCells, manageCells } from "../utils/render";
 const props = defineProps<{ waterfallConfig: WaterfallConfig }>()
 const emit = defineEmits<{
   (event: 'scrollToBottom'): void
@@ -10,7 +11,9 @@ const emit = defineEmits<{
 let layout = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig)
 let columnCount = layout.count
 let columnWidth = layout.width[0]
-let columnHeights = []
+let columnHeights: Array<number> = []
+
+//adjustCells(mediatorRects, columnHeights, true)
 
 
 const getAdaptedRect = () => {
