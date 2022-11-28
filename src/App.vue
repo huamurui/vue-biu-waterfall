@@ -14,11 +14,11 @@ const config = {
   singleMaxWidth: 300,
 }
 
-let items = reactive(ItemFactory.get(30))
+let items = reactive(ItemFactory.get(18))
 const reflow = () => {
   setTimeout(() => {
-    items.push(...ItemFactory.get(10))
-  }, 1000)
+    items.push(...ItemFactory.get(6))
+  }, 2000)
   //不对...能不能完成之后自动滚到底下...
 }
 
@@ -33,8 +33,11 @@ let set = reactive({ ultraSetColumnCount: NaN })
     <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow">
       <input v-model="set.ultraSetColumnCount">{{ set.ultraSetColumnCount }}
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <div :style="item.style"> {{ item }} lala </div>
+        <div :style="item.style" style="position:absolute"> {{ item }} lala
+          <!-- <div style="background-color:blueviolet">lala</div> -->
+        </div>
       </WaterfallCell>
+
     </WaterfallConfig>
   </div>
 

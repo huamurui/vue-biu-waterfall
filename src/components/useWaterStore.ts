@@ -1,5 +1,6 @@
 import { reactive } from 'vue';
 
+
 let mediatorRects: Rectangle[] = reactive([])
 
 const getRect = (cell: WaterfallCell) => {
@@ -7,26 +8,22 @@ const getRect = (cell: WaterfallCell) => {
     width: cell.width,
     height: cell.height,
     left: cell.style.left,
-    top: cell.style.left,
+    top: cell.style.top,
   }
   mediatorRects.push(rect)
 }
-// mediatorRects[0] = {
-//   width: 100,
-//   height: 100,
-//   left: 0,
-//   top: 0,
-// }
+
+//scale the rect to fit the layout
+//and maybe we need to set the rect's left and top here too. ...but ... a little bit complicated
 const setRect = (width: number) => {
   mediatorRects.forEach((rect) => {
     rect.height = rect.height * (width / rect.width)
     rect.width = width
-    console.log(rect)
+    // console.log(rect)
   })
-  console.log(width)
-  // console.log(mediatorRects)
 }
 export { getRect, setRect, mediatorRects }
+
 
 
 // DOMRect {top: 0, left: 0, width: 0, height: 0}

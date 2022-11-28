@@ -40,23 +40,6 @@ const getLayoutStrategy = (width: number, options: WaterfallConfig) => {
 }
 
 
-//scale the rect to fit the layout
-
-// const getAdaptedRect = (metaRect: Rectangle, adaptedWidth: number) => {
-//   const { width, height, left, top } = metaRect
-//   let scale = (adaptedWidth / width)
-//   const rect = {
-//     // width: adaptedWidth,
-//     height: scale * height,
-//     left: left,
-//     top: top
-//   }
-//   console.log(scale)
-//   //你个笨蛋哦，这个width上边刚刚被改哦...
-//   //嗯...但其实也不是这个原因，你在别的地方，也就是store动了宽度的。
-//   return rect
-// }
-
 
 
 

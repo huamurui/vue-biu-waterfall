@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { getAdaptedRect } from "../utils/calculate";
+
 import { mediatorRects, getRect } from "./useWaterStore";
 import { reactive, ref, watch, onMounted } from 'vue'
 const props = defineProps<{
@@ -18,6 +18,9 @@ let adaptedRect = mediatorRects[metaRect.index]
 watch(() => adaptedRect.width, () => {
   props.waterCell.style.height = adaptedRect.height + 'px'
   props.waterCell.style.width = adaptedRect.width + 'px'
+  props.waterCell.style.left = adaptedRect.left + 'px'
+  props.waterCell.style.top = adaptedRect.top + 'px'
+  console.log('watch', props.waterCell.style.top)
 })
 
 
@@ -30,7 +33,6 @@ let isActive = true
 <template>
   <!-- <div class="testal" :class="{ ready: isActive }">lala</div> -->
   <slot :style="{}"></slot>
-  <div>{{ adaptedRect }} {{ }}</div>
 </template>
 
 <style scoped>

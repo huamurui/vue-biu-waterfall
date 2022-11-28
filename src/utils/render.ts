@@ -1,28 +1,28 @@
-export { }
-// // the functions here will change and do operations on the original variable
-// export { adjustCells, manageCells }
-// const adjustCells = (cells: WaterfallCell[], columnHeights: Array<number>, reflow: boolean) => {
-//   let columnIndex = getMinKey(columnHeights)
-//   let columnHeight
-//   for (let j = 0; j < cells.length; j++) {
-//     // Place the cell to column with the minimal height.
-//     columnIndex = getMinKey(columnHeights)
-//     columnHeight = columnHeights[columnIndex]
-//     cells[j].style.height = (cells[j].offsetHeight - CELL_PADDING) + 'px'
-//     cells[j].style.left = columnIndex * (COLUMN_WIDTH + GAP_WIDTH) + 'px'
-//     cells[j].style.top = columnHeight + 'px'
-//     columnHeights[columnIndex] = columnHeight + GAP_HEIGHT + cells[j].offsetHeight
-//     if (!reflow) {
-//       cells[j].className = 'cell ready'
-//     }
-//   }
-//   //  cellsContainer.style.height = getMaxVal(columnHeights) + 'px'
-// }
+// the functions here will change and do operations on the original variable
+export { adjustCells, manageCells }
+const adjustCells = (cells: Rectangle[], columnHeights: Array<number>, columnWidth: number, reflow: boolean) => {
+  let columnIndex = getMinKey(columnHeights)
+  let columnHeight = columnHeights[columnIndex]
+  for (let j = 0; j < cells.length; j++) {
+    // Place the cell to column with the minimal height.
+    columnIndex = getMinKey(columnHeights)
+    columnHeight = columnHeights[columnIndex]
+    cells[j].left = columnIndex * columnWidth
+    cells[j].top = columnHeight
+    columnHeights[columnIndex] = columnHeight + cells[j].height + 10
+    // if (!reflow) {
+    //   cells[j].className = 'cell ready'
+    // }
+  }
+  console.log('columnHeights', columnHeights)
+  //  cellsContainer.style.height = getMaxVal(columnHeights) + 'px'
+}
 
 
 
 // //number[] Array<number>有区别吗
-// const manageCells = (managing: boolean, columnHeights: number[], columnCount: number) => {
+const manageCells = {}
+// = (managing: boolean, columnHeights: number[], columnCount: number) => {
 //   // Lock managing state to avoid another async call. See {Function} delayedScroll.
 //   //这里这个变量其实就是...加锁啊...
 //   managing = true
@@ -49,34 +49,16 @@ export { }
 //   }
 
 //   // If there's space in viewport for a cell, request new cells.
-//   if (viewportBottom > getMinVal(columnHeights)) {
-//     // Remove the if/else statement in your project, just call the appendCells function.
-//     appendCells(columnCount)
-//   }
+//   // if (viewportBottom > getMinVal(columnHeights)) {
+//   //   // Remove the if/else statement in your project, just call the appendCells function.
+//   //   appendCells(columnCount)
+//   // }
 
 
 //   // Unlock managing state.
 //   managing = false
 // }
+// 也算是知道Array<number>和number[]...有啥区别。
+const getMinVal = (columnHeights: Array<number>) => Math.min.apply(Math, columnHeights)
 
-// const getMinKey = (columnHeights: Array<number>) => {
-//   let min = columnHeights[0]
-//   let minKey = 0
-//   for (let i = 1; i < columnHeights.length; i++) {
-//     if (columnHeights[i] < min) {
-//       min = columnHeights[i]
-//       minKey = i
-//     }
-//   }
-//   return minKey
-// }
-
-// const getMinVal = (columnHeights: number[]) => {
-//   let min = columnHeights[0]
-//   for (let i = 1; i < columnHeights.length; i++) {
-//     if (columnHeights[i] < min) {
-//       min = columnHeights[i]
-//     }
-//   }
-//   return min
-// }
+const getMinKey = (columnHeights: Array<number>) => columnHeights.indexOf(getMinVal(columnHeights))
