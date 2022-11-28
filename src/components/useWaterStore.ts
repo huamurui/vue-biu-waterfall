@@ -19,10 +19,12 @@ const getRect = (cell: WaterfallCell) => {
 // }
 const setRect = (width: number) => {
   mediatorRects.forEach((rect) => {
+    rect.height = rect.height * (width / rect.width)
     rect.width = width
+    console.log(rect)
   })
   console.log(width)
-  console.log(mediatorRects)
+  // console.log(mediatorRects)
 }
 export { getRect, setRect, mediatorRects }
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { getAdaptedRect } from "../utils/calculate";
+// import { getAdaptedRect } from "../utils/calculate";
 import { mediatorRects, getRect } from "./useWaterStore";
-import { reactive, watch, onBeforeMount } from 'vue'
+import { reactive, ref, watch, onMounted } from 'vue'
 const props = defineProps<{
   waterCell: WaterfallCell
 }>()
@@ -14,13 +14,13 @@ let metaRect = {
   style: ''
 }
 getRect(metaRect)
-
-let adaptedRect = reactive(getAdaptedRect(mediatorRects[metaRect.index], mediatorRects[0].width))
-watch(() => mediatorRects[0].width, (newVal) => {
-  adaptedRect = getAdaptedRect(mediatorRects[0], newVal)
-  console.log('aaaa', newVal)
-  console.log(adaptedRect.width)
+let adaptedRect = mediatorRects[metaRect.index]
+watch(() => adaptedRect.width, () => {
+  props.waterCell.style.height = adaptedRect.height + 'px'
+  props.waterCell.style.width = adaptedRect.width + 'px'
 })
+
+
 let isActive = true
 
 //https://cn.vuejs.org/guide/essentials/class-and-style.html
@@ -28,7 +28,7 @@ let isActive = true
 </script>
 
 <template>
-  <div class="testal" :class="{ ready: isActive }">lala</div>
+  <!-- <div class="testal" :class="{ ready: isActive }">lala</div> -->
   <slot :style="{}"></slot>
   <div>{{ adaptedRect }} {{ }}</div>
 </template>

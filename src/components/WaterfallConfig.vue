@@ -2,7 +2,7 @@
 import { ref, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
 import { mediatorRects, setRect } from "./useWaterStore";
 import { getLayoutStrategy } from "../utils/calculate";
-import { adjustCells, manageCells } from "../utils/render";
+// import { adjustCells, manageCells } from "../utils/render";
 const props = defineProps<{ waterfallConfig: WaterfallConfig }>()
 const emit = defineEmits<{
   (event: 'scrollToBottom'): void
@@ -44,6 +44,7 @@ const onScroll = () => {
 
 
 onMounted(() => {
+  setRect(layout.width[0])
   addEventListener('resize', onResize)
   addEventListener('scroll', onScroll)
 })

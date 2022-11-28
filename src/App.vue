@@ -33,7 +33,7 @@ let set = reactive({ ultraSetColumnCount: NaN })
     <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow">
       <input v-model="set.ultraSetColumnCount">{{ set.ultraSetColumnCount }}
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <div :style="item.style" style="height:100px"> {{ item }} lala </div>
+        <div :style="item.style"> {{ item }} lala </div>
       </WaterfallCell>
     </WaterfallConfig>
   </div>
