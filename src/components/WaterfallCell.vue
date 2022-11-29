@@ -22,32 +22,35 @@ watch(() => adaptedRect.width, () => {
   props.waterCell.style.top = adaptedRect.top + 'px'
 })
 
+// create a space to add the animation
+let cellState = {
+  pending: false,
+  ready: true,
+  outOfView: false
+}
 
-let isActive = true
+// Remove cells' contents if they are too far away from the viewport. Get them back if they are near.
+// this part may also need css to make it work,...don't know how to do it yet......the style of slot is ...shit.
+const auto = () => {
+  let viewportTop = document.body.scrollTop || document.documentElement.scrollTop
+  let viewportBottom = (window.innerHeight || document.documentElement.clientHeight) + viewportTop
+  if (props.waterCell.style.top + props.waterCell.style.height - 500 > viewportBottom) {
+    cellState.outOfView = true
+  }
+}
 
 //https://cn.vuejs.org/guide/essentials/class-and-style.html
 
 </script>
 
 <template>
-  <slot :style="{}"></slot>
+  <div class="ready" style="background:red">
+    <slot></slot>
+  </div>
 </template>
 
-<style scoped>
+<style >
 /* cell */
-
-.cell {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 14px 14px 10px;
-  width: 190px;
-  position: absolute;
-}
-
-.cell:hover {
-  box-shadow: 0 0 10px #aaa;
-}
-
 .pending {
   opacity: 0;
   transform: translateY(50px);
@@ -64,26 +67,5 @@ let isActive = true
 
 .shadow {
   visibility: hidden;
-}
-
-.cell p {
-  margin: 0 0 10px;
-}
-
-
-.cell h2 {
-  font-size: 12px;
-  margin: 0;
-  height: 14px;
-  line-height: 14px;
-}
-
-.cell a {
-  color: #666;
-  text-decoration: none;
-}
-
-.cell a:hover {
-  color: #f3c;
 }
 </style>

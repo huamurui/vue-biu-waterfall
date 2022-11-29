@@ -10,7 +10,7 @@
 ## Installation
 
 ```shell
-npm install --save vue-waterfall
+npm install --save vue-biu-waterfall
 ```
 
 ### Import

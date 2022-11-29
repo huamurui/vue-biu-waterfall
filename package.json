@@ -1,8 +1,11 @@
 {
   "name": "vue-biu-waterfall",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "a waterfall layout based on vue3 and ts",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",

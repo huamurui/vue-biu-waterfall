@@ -28,7 +28,7 @@ const onScroll = () => {
   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
   let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-  if (scrollTop + windowHeight >= scrollHeight) {
+  if (scrollTop + windowHeight + 3 >= scrollHeight) {
     console.log('scroll to bottom')
     emit('scrollToBottom')
   }
