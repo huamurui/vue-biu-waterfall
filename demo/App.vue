@@ -1,7 +1,7 @@
 //here is a demo of how to use the component
 <script setup lang="ts">
 
-import { WaterfallConfig, WaterfallCell } from './components'
+import { WaterfallConfig, WaterfallCell } from '../lib'
 import ItemFactory from './mock/ItemFactory'
 import { reactive, ref } from 'vue'
 const config = {
