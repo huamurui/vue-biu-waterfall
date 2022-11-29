@@ -20,8 +20,7 @@ npm install --save vue-biu-waterfall
 #### vue3 + setup + ts
 
 ```ts
-import WaterfallConfig from './components/WaterfallConfig.vue'
-import WaterfallCell from './components/WaterfallCell.vue'
+import { WaterfallConfig, WaterfallCell } from 'vue-biu-waterfall/lib'
 
 // these two are for ... 
 const config = {
