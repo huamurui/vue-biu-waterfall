@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { mediatorRects, getRect } from "./useWaterStore";
-import { reactive, ref, watch, onMounted } from 'vue'
+import { watch } from 'vue'
 const props = defineProps<{
   waterCell: WaterfallCell
 }>()
@@ -20,7 +20,6 @@ watch(() => adaptedRect.width, () => {
   props.waterCell.style.width = adaptedRect.width + 'px'
   props.waterCell.style.left = adaptedRect.left + 'px'
   props.waterCell.style.top = adaptedRect.top + 'px'
-  console.log('watch', props.waterCell.style.top)
 })
 
 
@@ -31,18 +30,10 @@ let isActive = true
 </script>
 
 <template>
-  <!-- <div class="testal" :class="{ ready: isActive }">lala</div> -->
   <slot :style="{}"></slot>
 </template>
 
 <style scoped>
-.testal {
-  width: 100px;
-  height: 100px;
-  background-color: olivedrab;
-}
-
-
 /* cell */
 
 .cell {

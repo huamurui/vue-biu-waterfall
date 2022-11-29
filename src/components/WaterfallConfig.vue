@@ -1,57 +1,41 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
-import { mediatorRects, setRect } from "./useWaterStore";
+import { watch, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
+import { mediatorRects } from "./useWaterStore";
 import { getLayoutStrategy } from "../utils/calculate";
-import { adjustCells } from '../utils/render'
-// import { adjustCells, manageCells } from "../utils/render";
-const props = defineProps<{ waterfallConfig: WaterfallConfig }>()
+import { adjustCells, setRect } from '../utils/render'
+const props = defineProps<{
+  waterfallConfig: WaterfallConfig
+}>()
 const emit = defineEmits<{
   (event: 'scrollToBottom'): void
+  (event: 'allThingDone'): void
 }>()
 
-let layout = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig)
-let columnCount = layout.count
-let columnWidth = layout.width[0]
-// let columnHeights: Array<number> = new Array(columnCount).fill(0)
 
-// adjustCells(mediatorRects, columnHeights, columnWidth, true)
-
-
-const getAdaptedRect = () => {
-  // console.log(mediatorRects)
-}
-
-
-
-
-
-const getLayout = () => {
-  layout = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig)
-  columnWidth = layout.width[0]
-}
+watch(() => mediatorRects.length, () => {
+  onResize()
+})
 const onResize = () => {
-  getLayout()
-  columnCount = layout.count
-  columnWidth = layout.width[0]
+  let columnCount = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig).columnCount
+  let columnWidth = getLayoutStrategy(document.body.clientWidth, props.waterfallConfig).columnWidth
   let columnHeights: Array<number> = new Array(columnCount).fill(0)
-  setRect(layout.width[0])
+  setRect(columnWidth)
   adjustCells(mediatorRects, columnHeights, columnWidth, true)
-  // columnHeights.length = 0
+  emit('allThingDone')
+  console.log('resize')
 }
 const onScroll = () => {
-  console.log(document.body.scrollTop)
-  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-  if (scrollTop + window.innerHeight >= document.body.clientHeight) {
-    setTimeout(() => {
-      // emit('scrollToBottom')
-    }, 1000)
-    console.log('scrollToBottom')
+  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+  let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+  if (scrollTop + windowHeight >= scrollHeight) {
+    console.log('scroll to bottom')
+    emit('scrollToBottom')
   }
 }
 
 
 onMounted(() => {
-  setRect(layout.width[0])
   addEventListener('resize', onResize)
   addEventListener('scroll', onScroll)
   onResize()
@@ -60,11 +44,6 @@ onUnmounted(() => {
   removeEventListener('resize', onResize)
   removeEventListener('scroll', onScroll)
 })
-onBeforeUpdate(() => {
-  getAdaptedRect()
-})
-
-
 
 </script>
 

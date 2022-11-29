@@ -5,7 +5,7 @@ import WaterfallConfig from './components/WaterfallConfig.vue'
 import WaterfallCell from './components/WaterfallCell.vue'
 
 import ItemFactory from './mock/ItemFactory'
-import { reactive, } from 'vue'
+import { reactive, ref } from 'vue'
 const config = {
   interval: 200,
   lineGap: 250,
@@ -15,29 +15,28 @@ const config = {
 }
 
 let items = reactive(ItemFactory.get(18))
+let isReflowing = false
 const reflow = () => {
-  setTimeout(() => {
+  isReflowing = true
+  if (isReflowing) {
     items.push(...ItemFactory.get(6))
-  }, 2000)
-  //不对...能不能完成之后自动滚到底下...
+  }
 }
-
-
-let set = reactive({ ultraSetColumnCount: NaN })
+const reflowed = () => {
+  console.log('reflowed')
+  isReflowing = false
+}
+// let set = reactive({ ultraSetColumnCount: NaN })
 
 
 </script>
 
 <template>
   <div>
-    <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow">
-      <input v-model="set.ultraSetColumnCount">{{ set.ultraSetColumnCount }}
+    <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <div :style="item.style" style="position:absolute"> {{ item }} lala
-          <!-- <div style="background-color:blueviolet">lala</div> -->
-        </div>
+        <div :style="item.style" style="position:absolute;margin: 5px"> {{ item }} </div>
       </WaterfallCell>
-
     </WaterfallConfig>
   </div>
 

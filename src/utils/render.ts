@@ -1,15 +1,28 @@
 // the functions here will change and do operations on the original variable
-export { adjustCells, manageCells }
+export { setRect, adjustCells, manageCells }
+import { mediatorRects } from '../components/useWaterStore'
+
+
+//scale the rect to fit the layout
+const setRect = (width: number) => {
+  mediatorRects.forEach((rect) => {
+    rect.height = rect.height * (width / rect.width)
+    rect.width = width
+  })
+}
+
+//set the rect's left and top here too.
 const adjustCells = (cells: Rectangle[], columnHeights: Array<number>, columnWidth: number, reflow: boolean) => {
   let columnIndex = getMinKey(columnHeights)
   let columnHeight = columnHeights[columnIndex]
+  columnWidth = columnWidth + 5
   for (let j = 0; j < cells.length; j++) {
     // Place the cell to column with the minimal height.
     columnIndex = getMinKey(columnHeights)
     columnHeight = columnHeights[columnIndex]
     cells[j].left = columnIndex * columnWidth
     cells[j].top = columnHeight
-    columnHeights[columnIndex] = columnHeight + cells[j].height + 10
+    columnHeights[columnIndex] = columnHeight + cells[j].height + 5
     // if (!reflow) {
     //   cells[j].className = 'cell ready'
     // }
@@ -18,7 +31,7 @@ const adjustCells = (cells: Rectangle[], columnHeights: Array<number>, columnWid
   //  cellsContainer.style.height = getMaxVal(columnHeights) + 'px'
 }
 
-
+// you put the states on Config's emits and using isReflowing as a lock on App.vue...so,...is there a better way to do this? like the example below? and add css animation to the cells.
 
 // //number[] Array<number>有区别吗
 const manageCells = {}
@@ -58,7 +71,7 @@ const manageCells = {}
 //   // Unlock managing state.
 //   managing = false
 // }
-// 也算是知道Array<number>和number[]...有啥区别。
+
 const getMinVal = (columnHeights: Array<number>) => Math.min.apply(Math, columnHeights)
 
 const getMinKey = (columnHeights: Array<number>) => columnHeights.indexOf(getMinVal(columnHeights))

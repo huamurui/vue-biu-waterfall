@@ -33,8 +33,8 @@ const getLayoutStrategy = (width: number, options: WaterfallConfig) => {
     }
   }
   return {
-    width: getArrayFillWith(slotWidth, count),
-    count: count,
+    columnWidth: slotWidth - 5,
+    columnCount: count,
     left: 0,
   }
 }
