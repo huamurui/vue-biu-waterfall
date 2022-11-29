@@ -26,16 +26,14 @@ watch(() => adaptedRect.width, () => {
 let cellState = {
   pending: false,
   ready: true,
-  outOfView: false
+  shadow: false
 }
 
-// Remove cells' contents if they are too far away from the viewport. Get them back if they are near.
-// this part may also need css to make it work,...don't know how to do it yet......the style of slot is ...shit.
 const auto = () => {
   let viewportTop = document.body.scrollTop || document.documentElement.scrollTop
   let viewportBottom = (window.innerHeight || document.documentElement.clientHeight) + viewportTop
   if (props.waterCell.style.top + props.waterCell.style.height - 500 > viewportBottom) {
-    cellState.outOfView = true
+    cellState.shadow = true
   }
 }
 
@@ -43,13 +41,14 @@ const auto = () => {
 
 </script>
 
-<template>
-  <div class="ready" style="background:red">
+<template >
+  <div class="ready" :style="props.waterCell.style" style="position:absolute;margin: 5px;">
+    {{ props.waterCell.style }}
     <slot></slot>
   </div>
 </template>
 
-<style >
+<style scoped>
 /* cell */
 .pending {
   opacity: 0;
