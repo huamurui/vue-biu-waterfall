@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { watch, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
-import { mediatorRects } from "./useWaterStore";
-import { getLayoutStrategy } from "../utils/calculate";
-import { adjustCells, setRect } from '../utils/render'
+import { mediatorRects } from "./stores/useWaterStore";
+import { getLayoutStrategy } from "./utils/calculate";
+import { adjustCells, setRect } from './utils/render'
 const props = defineProps<{
   waterfallConfig: WaterfallConfig
 }>()

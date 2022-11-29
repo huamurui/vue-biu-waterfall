@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { mediatorRects, getRect } from "./useWaterStore";
+import { mediatorRects, getRect } from "./stores/useWaterStore";
 import { watch } from 'vue'
 const props = defineProps<{
   waterCell: WaterfallCell
@@ -43,7 +43,6 @@ const auto = () => {
 
 <template >
   <div class="ready" :style="props.waterCell.style" style="position:absolute;margin: 5px;">
-    {{ props.waterCell.style }}
     <slot></slot>
   </div>
 </template>

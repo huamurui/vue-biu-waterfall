@@ -1,9 +1,7 @@
 //here is a demo of how to use the component
 <script setup lang="ts">
 
-import WaterfallConfig from './components/WaterfallConfig.vue'
-import WaterfallCell from './components/WaterfallCell.vue'
-
+import { WaterfallConfig, WaterfallCell } from './components'
 import ItemFactory from './mock/ItemFactory'
 import { reactive, ref } from 'vue'
 const config = {
@@ -37,7 +35,7 @@ const reflowed = () => {
   <div>
     <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <div> {{ item.index }} </div>
+        <div style="color:grey;"> {{ item.index }} </div>
       </WaterfallCell>
     </WaterfallConfig>
   </div>

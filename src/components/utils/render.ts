@@ -1,6 +1,6 @@
 // the functions here will change and do operations on the original variable
 export { setRect, adjustCells, manageCells }
-import { mediatorRects } from '../components/useWaterStore'
+import { mediatorRects } from '../stores/useWaterStore'
 
 
 //scale the rect to fit the layout
@@ -12,17 +12,17 @@ const setRect = (width: number) => {
 }
 
 //set the rect's left and top here too.
-const adjustCells = (cells: Rectangle[], columnHeights: Array<number>, columnWidth: number, reflow: boolean) => {
+const adjustCells = (cells: Rectangle[], columnHeights: Array<number>, columnWidth: number, reflow: boolean, margin: number = 5) => {
   let columnIndex = getMinKey(columnHeights)
   let columnHeight = columnHeights[columnIndex]
-  columnWidth = columnWidth + 5
+  columnWidth = columnWidth + margin
   for (let j = 0; j < cells.length; j++) {
     // Place the cell to column with the minimal height.
     columnIndex = getMinKey(columnHeights)
     columnHeight = columnHeights[columnIndex]
     cells[j].left = columnIndex * columnWidth
     cells[j].top = columnHeight
-    columnHeights[columnIndex] = columnHeight + cells[j].height + 5
+    columnHeights[columnIndex] = columnHeight + cells[j].height + margin
   }
 }
 

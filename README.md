@@ -1,7 +1,9 @@
-# A waterfall layout based on vue3 and ts(still in developing now)
+# A waterfall layout based on vue3 and typescript(still in developing now)
 
 [![Version](https://img.shields.io/npm/v/vue-biu-waterfall)](https://www.npmjs.com/package/vue-biu-waterfall)
 [![License](https://img.shields.io/npm/l/vue-biu-waterfall)](LICENSE)
+
+...and, this repository is inspired by following  two repositories [myst729/Waterfall](https://github.com/myst729/Waterfall),  [MopTym/vue-waterfall](https://github.com/MopTym/vue-waterfall)
 
 ## Demo
 
@@ -15,42 +17,39 @@ npm install --save vue-biu-waterfall
 
 ### Import
 
-#### ES6
-<!-- 
-```js
-/* in xxx.vue */
+#### vue3 + setup + ts
 
-import Waterfall from 'vue-waterfall/lib/waterfall'
-import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
+```ts
+import WaterfallConfig from './components/WaterfallConfig.vue'
+import WaterfallCell from './components/WaterfallCell.vue'
 
-export default {
-  ...
-  components: {
-    Waterfall,
-    WaterfallSlot
-  },
-  ...
+// these two are for ... 
+const config = {
+  interval: ...
+  lineGap: ...
+  minLineGap: ...
+  maxLineGap: ...
+  singleMaxWidth: ...
 }
-``` -->
+let items = ...
+
+const reflow= ...
+const reflowed = ...
+```
 
 ### template structure
-<!-- 
+
 ```html
-<waterfall-config :line-gap="200" :watch="items">
-  <!-- each component is wrapped by a waterfall slot -->
-  <waterfall-slot
-    v-for="(item, index) in items"
-    :width="item.width"
-    :height="item.height"
-    :order="index"
-    :key="item.id"
-  >
-    <!--
-      your component
-    -->
-  </waterfall-slot>
-</waterfall-config>
-``` -->
+    <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow" @allThingDone="reflowed">
+      <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
+        <div>
+           {{ item.lalala }} 
+           <!-- and you can put more things in this div, such as <img src="item.url">...... -->
+        </div>
+      </WaterfallCell>
+    </WaterfallConfig>
+
+```
 
 ## Props
 
@@ -67,14 +66,16 @@ interval|----|The minimal time interval (ms) between reflow actions.
 
 ### waterfallCell
 
-<!-- Name | Default | Description
+Name | Default | Description
 ---- | ---- | ----
-width | ---- | ----
-height |=line-gap |----
-key| =line-gap |----
-order| =max-line-gap |----
-watch| ----|----
-move-class| ----|Class for transition -->
+item | ---- | ----
+item.index | ---- | ----
+item.width | ---- | ----
+item.height |=line-gap |---
+item.style | ---- | ----
+
+Here we directly pass the object into waterfallCell, but the object should have flowing features:\
+height, width, index, style. the style could be empty, but still needed.
 
 ## Transition
 
