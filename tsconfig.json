@@ -20,7 +20,11 @@
     "demo/**/*.ts",
     "demo/**/*.d.ts",
     "demo/**/*.tsx",
-    "demo/**/*.vue"
+    "demo/**/*.vue",
+    "lib/**/*.ts",
+    "lib/**/*.d.ts",
+    "lib/**/*.tsx",
+    "lib/**/*.vue"
   ],
   "references": [
     {

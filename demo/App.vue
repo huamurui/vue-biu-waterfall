@@ -14,6 +14,7 @@ const config = {
 
 
 let items = reactive(ItemFactory.get(18))
+// items.push(...ItemFactory.get(6))
 let isReflowing = false
 const reflow = () => {
   isReflowing = true
@@ -24,10 +25,10 @@ const reflow = () => {
   }
 }
 const reflowed = () => {
-  console.log('reflowed')
   isReflowing = false
 }
 // let set = reactive({ ultraSetColumnCount: NaN })
+
 
 </script>
 
@@ -43,5 +44,7 @@ const reflowed = () => {
 </template>
 
 <style scoped>
-
+.all {
+  margin: 0;
+}
 </style>
