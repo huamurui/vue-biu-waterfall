@@ -7,7 +7,9 @@
 
 ## Demo
 
-### [biu~](http://biubiubiu.huamurui.me)
+### [biu~](http://biubiubiu.huamurui.me)  <---click here to see it
+
+![gif](./demonstration.gif)
 
 ## Installation
 
