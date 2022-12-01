@@ -1,6 +1,6 @@
 {
   "name": "vue-biu-waterfall",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "description": "a waterfall layout based on vue3 and ts",
   "files": [
@@ -29,9 +29,11 @@
     "vue",
     "vue3",
     "ts",
+    "typescript",
     "waterfall",
     "layout",
-    "ui"
+    "ui",
+    "pinterest"
   ],
   "author": "huamurui",
   "license": "MIT"

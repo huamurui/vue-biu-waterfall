@@ -4,13 +4,6 @@
 import { WaterfallConfig, WaterfallCell } from '../lib'
 import ItemFactory from './mock/ItemFactory'
 import { reactive, ref } from 'vue'
-const config = {
-  interval: 200,
-  lineGap: 250,
-  minLineGap: 100,
-  maxLineGap: 320,
-  singleMaxWidth: 300,
-}
 
 let items = reactive(ItemFactory.get(18))
 
@@ -32,7 +25,7 @@ const reflowed = () => {
 
 <template>
   <div>
-    <WaterfallConfig :waterfallConfig="config" @scrollToBottom="reflow" @allThingDone="reflowed">
+    <WaterfallConfig @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
         <div style="color:grey;"> {{ item.index }} </div>
       </WaterfallCell>
