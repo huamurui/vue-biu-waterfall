@@ -11,3 +11,4 @@ const getRect = (cell: WaterfallCell) => {
   }
   mediatorRects.push(rect)
 }
+//https://cn.vuejs.org/guide/scaling-up/state-management.html#simple-state-management-with-reactivity-api

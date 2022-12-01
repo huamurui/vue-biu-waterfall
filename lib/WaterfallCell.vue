@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { mediatorRects, getRect } from "./stores/useWaterStore";
-import { watch } from 'vue'
+import { watch, onMounted, ref } from 'vue'
 const props = defineProps<{
   waterCell: WaterfallCell
 }>()
@@ -23,39 +23,30 @@ watch(() => adaptedRect.width, () => {
   props.waterCell.style.top = adaptedRect.top + margin + 'px'
 })
 
-// create a space to add the animation
-let cellState = {
-  pending: false,
-  ready: true,
-  shadow: false
-}
-
-const auto = () => {
-  let viewportTop = document.body.scrollTop || document.documentElement.scrollTop
-  let viewportBottom = (window.innerHeight || document.documentElement.clientHeight) + viewportTop
-  if (props.waterCell.style.top + props.waterCell.style.height - 500 > viewportBottom) {
-    cellState.shadow = true
-  }
-}
-
 //https://cn.vuejs.org/guide/essentials/class-and-style.html
+//https://cn.vuejs.org/guide/built-ins/transition.html
+//https://cn.vuejs.org/guide/built-ins/transition.html#the-transition-component
+// this might be what you need
+let readyToGo = ref(false)
+onMounted(() => {
+  readyToGo.value = true
+})
 
 </script>
 
-<template >
-  <div class="ready" :style="props.waterCell.style" style="position:absolute">
-    <slot></slot>
-  </div>
+<template>
+  <Transition name="cell">
+    <div v-if="readyToGo" :style="props.waterCell.style" class="cell">
+      <slot></slot>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
 /* cell */
-.pending {
-  opacity: 0;
-  transform: translateY(50px);
-}
 
-.ready {
+.cell {
+  position: absolute;
   transition:
     opacity 1s ease-in-out,
     box-shadow 300ms ease-in-out,
@@ -63,6 +54,15 @@ const auto = () => {
     top 700ms ease-in-out,
     transform 700ms ease-in-out;
 }
+
+.cell-enter-active {
+  transform: scale(0.5);
+}
+
+.cell-enter-to {
+  transform: scale(1);
+}
+
 
 .shadow {
   visibility: hidden;

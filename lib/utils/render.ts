@@ -1,10 +1,10 @@
 // the functions here will change and do operations on the original variable
-export { setRect, adjustCells, manageCells }
+export { setRects, adjustCells, manageCells }
 import { mediatorRects } from '../stores/useWaterStore'
 
 
 //scale the rect to fit the layout
-const setRect = (width: number) => {
+const setRects = (width: number) => {
   mediatorRects.forEach((rect) => {
     rect.height = rect.height * (width / rect.width)
     rect.width = width

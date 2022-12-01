@@ -5,6 +5,8 @@
 
 ...and, this repository is inspired by following  two repositories [myst729/Waterfall](https://github.com/myst729/Waterfall),  [MopTym/vue-waterfall](https://github.com/MopTym/vue-waterfall)
 
+ps:you know what? I want to call this biuterfall(biu-waterfall->biuterfall,and similar to beautiful)
+
 ## Demo
 
 ### [biu~](http://biubiubiu.huamurui.me)  <---click here to see it
@@ -59,11 +61,11 @@ const reflowed = ...
 Name | Default | Description
 ---- | ---- | ----
 line-gap | ---- | Required. The standard space (px) between lines.
-min-line-gap |=line-gap The minimal space between lines.
-max-line-gap| =line-gap The maximal space between lines.
-single-max-width| =max-line-gap |The maximal width of slot which is single in horizontal direction.
-watch| ----|Watch something, reflow when it changes.
-interval|----|The minimal time interval (ms) between reflow actions.
+min-line-gap | ---- | The minimal space between lines.
+max-line-gap | --- | The maximal space between lines.
+single-max-width | --- |The maximal width of slot which is single in horizontal direction.
+watch | ---- | Watch something, reflow when it changes.
+interval | ---- | The minimal time interval (ms) between reflow actions.
 
 ### waterfallCell
 
@@ -81,6 +83,10 @@ height, width, index, style. the style could be empty, but still needed.
 ## Transition
 
 ## Events
+
+### scrollToBottom
+
+### allThingDone
 
 ## Reactivity
 

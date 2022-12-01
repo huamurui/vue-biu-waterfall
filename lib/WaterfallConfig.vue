@@ -2,7 +2,7 @@
 import { watch, reactive, onMounted, onUnmounted, onBeforeUpdate } from 'vue'
 import { mediatorRects } from "./stores/useWaterStore";
 import { getLayoutStrategy } from "./utils/calculate";
-import { adjustCells, setRect } from './utils/render'
+import { adjustCells, setRects } from './utils/render'
 const props = defineProps<{
   waterfallConfig: WaterfallConfig
 }>()
@@ -11,13 +11,11 @@ const emit = defineEmits<{
   (event: 'allThingDone'): void
 }>()
 
-watch(() => mediatorRects.length, () => {
-  onResize()
-})
+
 const onResize = () => {
   let { columnCount, columnWidth } = getLayoutStrategy(document.documentElement.clientWidth, props.waterfallConfig)
   let columnHeights: Array<number> = new Array(columnCount).fill(0)
-  setRect(columnWidth)
+  setRects(columnWidth)
   adjustCells(mediatorRects, columnHeights, columnWidth, true)
   emit('allThingDone')
 }
@@ -30,7 +28,9 @@ const onScroll = () => {
   }
 }
 
-
+watch(() => mediatorRects.length, () => {
+  onResize()
+})
 onMounted(() => {
   addEventListener('resize', onResize)
   addEventListener('scroll', onScroll)

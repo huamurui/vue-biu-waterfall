@@ -12,16 +12,14 @@ const config = {
   singleMaxWidth: 300,
 }
 
-
 let items = reactive(ItemFactory.get(18))
+
 // items.push(...ItemFactory.get(6))
 let isReflowing = false
 const reflow = () => {
   isReflowing = true
   if (isReflowing) {
     items.push(...ItemFactory.get(6))
-    setTimeout(() => {
-    }, 500)
   }
 }
 const reflowed = () => {
@@ -44,7 +42,5 @@ const reflowed = () => {
 </template>
 
 <style scoped>
-.all {
-  margin: 0;
-}
+
 </style>

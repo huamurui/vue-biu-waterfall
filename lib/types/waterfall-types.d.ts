@@ -3,8 +3,6 @@ interface WaterfallCell {
   width: number
   height: number
   style: any
-  // order: number
-  // moveClass: string
 }
 interface Rectangle {
   width: number
@@ -12,9 +10,7 @@ interface Rectangle {
   left: number
   top: number
 }
-// interface Rectangles {
-//   [index: number]: Rectangle
-// }
+
 interface WaterfallConfig {
   interval: number
   lineGap: number
