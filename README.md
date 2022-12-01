@@ -12,6 +12,7 @@
 ### [biu~](http://biubiubiu.huamurui.me)  <---click here to see it
 
 ![gif](./demonstration.gif)
+![demo2](./demonstration2.png)
 
 ## Installation
 
