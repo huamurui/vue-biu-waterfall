@@ -64,9 +64,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <slot></slot>
+  <div class="biu">
+    <slot></slot>
+  </div>
 </template>
 
 <style scoped>
-
+/* .biu {
+  position: relative
+} */
 </style>

@@ -31,7 +31,7 @@ const reflowed = () => {
   <div>
     <WaterfallConfig @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <img :src="item.url" style="height: 100%;width:100%;" />
+        <img :src="item.url" style="height: 98%;width:98%;" />
       </WaterfallCell>
     </WaterfallConfig>
   </div>

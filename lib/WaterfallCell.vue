@@ -11,16 +11,15 @@ let metaRect = {
   index: props.waterCell.index,
   width: props.waterCell.width,
   height: props.waterCell.height,
-  style: ''
+  style: {}
 }
 getRect(metaRect)
 let adaptedRect = mediatorRects[metaRect.index]
-let margin: number = 5
 watch(() => adaptedRect.width, () => {
-  props.waterCell.style.height = adaptedRect.height - margin + 'px'
-  props.waterCell.style.width = adaptedRect.width - margin + 'px'
-  props.waterCell.style.left = adaptedRect.left + margin + 'px'
-  props.waterCell.style.top = adaptedRect.top + margin + 'px'
+  props.waterCell.style.height = adaptedRect.height + 'px'
+  props.waterCell.style.width = adaptedRect.width + 'px'
+  props.waterCell.style.left = adaptedRect.left + 'px'
+  props.waterCell.style.top = adaptedRect.top + 'px'
 })
 
 //https://cn.vuejs.org/guide/essentials/class-and-style.html
@@ -62,7 +61,6 @@ onMounted(() => {
 .cell-enter-to {
   transform: scale(1);
 }
-
 
 .shadow {
   visibility: hidden;
