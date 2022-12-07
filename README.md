@@ -5,7 +5,6 @@
 
 ...and, this repository is inspired by following  two repositories [myst729/Waterfall](https://github.com/myst729/Waterfall),  [MopTym/vue-waterfall](https://github.com/MopTym/vue-waterfall)
 
-~~ps:you know what? I want to call this biuterfall(biu-waterfall->biuterfall,and similar to beautiful)~~
 
 ## Demo
 
