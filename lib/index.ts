@@ -1,4 +1,4 @@
 import WaterfallCell from "./WaterfallCell.vue"
-import WaterfallConfig from "./WaterfallConfig.vue"
+import WaterfallContainer from "./WaterfallContainer.vue"
 
-export { WaterfallCell, WaterfallConfig }
+export { WaterfallCell, WaterfallContainer }

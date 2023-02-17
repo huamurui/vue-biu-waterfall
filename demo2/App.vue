@@ -1,7 +1,7 @@
 //here is a demo of how to use the component
 <script setup lang="ts">
 
-import { WaterfallConfig, WaterfallCell } from '../lib'
+import { WaterfallContainer, WaterfallCell } from '../lib'
 import ImageCenter from './mock/ImageCenter'
 import { reactive, onMounted } from 'vue'
 
@@ -29,14 +29,12 @@ const reflowed = () => {
 
 <template>
   <div>
-    <WaterfallConfig @scrollToBottom="reflow" @allThingDone="reflowed">
+    <WaterfallContainer @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
         <img :src="item.url" style="height: 98%;width:98%;" />
       </WaterfallCell>
-    </WaterfallConfig>
+    </WaterfallContainer>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

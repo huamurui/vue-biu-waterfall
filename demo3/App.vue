@@ -2,24 +2,29 @@
 <script setup lang="ts">
 
 import { WaterfallContainer, WaterfallCell } from '../lib'
-import ItemFactory from './mock/ItemFactory'
-import { reactive, ref } from 'vue'
+import ImageCenter from './mock/ImageCenter'
+import { reactive, onMounted } from 'vue'
 
-let items = reactive(ItemFactory.get(18))
 
-// items.push(...ItemFactory.get(6))
+let items: any = reactive([])
+onMounted(async () => {
+  let mediator = await ImageCenter.get(16)
+  console.log(mediator)
+  items.push(...mediator)
+})
+
+
 let isReflowing = false
-const reflow = () => {
-  isReflowing = true
-  if (isReflowing) {
-    items.push(...ItemFactory.get(6))
+const reflow = async (columnCount) => {
+  if (!isReflowing) {
+    isReflowing = true
+    items.push(...await ImageCenter.get(columnCount))
   }
 }
+
 const reflowed = () => {
   isReflowing = false
 }
-// let set = reactive({ ultraSetColumnCount: NaN })
-
 
 </script>
 
@@ -27,7 +32,7 @@ const reflowed = () => {
   <div>
     <WaterfallContainer @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <div style="color:grey;"> {{ item.index }} </div>
+        <img :src="item.url" style="height: 98%;width:98%;" />
       </WaterfallCell>
     </WaterfallContainer>
   </div>
