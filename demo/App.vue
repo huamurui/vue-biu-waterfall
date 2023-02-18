@@ -1,18 +1,17 @@
 //here is a demo of how to use the component
 <script setup lang="ts">
 
-import { WaterfallConfig, WaterfallCell } from '../lib'
+import { WaterfallContainer, WaterfallCell } from '../lib'
 import ItemFactory from './mock/ItemFactory'
 import { reactive, ref } from 'vue'
 
 let items = reactive(ItemFactory.get(18))
-
 // items.push(...ItemFactory.get(6))
 let isReflowing = false
-const reflow = () => {
+const reflow = (count: number) => {
   isReflowing = true
   if (isReflowing) {
-    items.push(...ItemFactory.get(6))
+    items.push(...ItemFactory.get(count))
   }
 }
 const reflowed = () => {
@@ -25,15 +24,12 @@ const reflowed = () => {
 
 <template>
   <div>
-    <WaterfallConfig @scrollToBottom="reflow" @allThingDone="reflowed">
+    <WaterfallContainer @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
         <div style="color:grey;"> {{ item.index }} </div>
       </WaterfallCell>
-    </WaterfallConfig>
+    </WaterfallContainer>
   </div>
-
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

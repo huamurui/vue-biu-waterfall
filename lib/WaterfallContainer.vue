@@ -26,7 +26,7 @@ const props = withDefaults(
 
 )
 const emit = defineEmits<{
-  (event: 'scrollToBottom'): void
+  (event: 'scrollToBottom', columnCount: number): void
   (event: 'allThingDone'): void
 }>()
 
@@ -44,7 +44,8 @@ const onScroll = () => {
   let windowHeight = document.documentElement.clientHeight
   let scrollHeight = document.documentElement.scrollHeight
   if (scrollTop + windowHeight + 3 >= scrollHeight) {
-    emit('scrollToBottom')
+    let { columnCount, columnWidth } = getLayoutStrategy(document.documentElement.clientWidth, props)
+    emit('scrollToBottom', columnCount)
   }
 }
 
