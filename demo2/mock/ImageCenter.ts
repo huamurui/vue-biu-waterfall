@@ -1,3 +1,5 @@
+import data from './data.json'
+
 let ImageCenter = (function () {
   let lastIndex = 0
   //I'm thinking about a question, is the reason why 'await' can only be written in async function is that if the mother function is not async and does not return Promise, then the async of the sub-function is useless.
@@ -6,46 +8,21 @@ let ImageCenter = (function () {
     let indexBi = lastIndex
     lastIndex = lastIndex + count
     for (let i = 0; i < count; i++) {
-      items[i] = await getImage(indexBi)
+      items.push({
+        index: indexBi,
+        url: `https://huamurui.github.io/data_and_so_on/images/paintings/shameful/${data[indexBi].name}`,
+        width: `${data[indexBi].width}`,
+        height: `${data[indexBi].height}`,
+        style: {
+          background:"skyblue",
+          borderRadius:"10px",
+          boxShadow:"0 0 10px #bbb",
+        }
+      })
       indexBi++
     }
     return items
   }
-
-  async function getImage(indexBi: number) {
-    let img_url = `https://playthings.huamurui.me/images/Boyana-Petkova${indexBi}.jpg`
-    const res: any = await getSize(img_url)
-    return new Promise((resolve, reject) => {
-      resolve({
-        index: indexBi,
-        style: {},
-        width: res.width,
-        height: res.height,
-        url: img_url
-      })
-    })
-
-  }
-  function getSize(url: string) {
-    return new Promise((resolve, reject) => {
-      let img = new Image()
-      img.src = url
-      img.onload = () => {
-        // console.log('图片加载完成', img.height, img.width)
-        resolve({
-          height: img.height,
-          width: img.width
-        })
-      }
-      img.onerror = () => {
-        reject({
-          height: 999,
-          width: 999
-        })
-      }
-    })
-  }
-
 
   return {
     get: getManyImages

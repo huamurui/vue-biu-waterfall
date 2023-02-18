@@ -6,13 +6,12 @@ import ItemFactory from './mock/ItemFactory'
 import { reactive, ref } from 'vue'
 
 let items = reactive(ItemFactory.get(18))
-
 // items.push(...ItemFactory.get(6))
 let isReflowing = false
-const reflow = () => {
+const reflow = (count: number) => {
   isReflowing = true
   if (isReflowing) {
-    items.push(...ItemFactory.get(6))
+    items.push(...ItemFactory.get(count))
   }
 }
 const reflowed = () => {

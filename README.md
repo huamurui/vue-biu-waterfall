@@ -24,7 +24,7 @@ npm install --save vue-biu-waterfall
 #### vue3 + setup + ts
 
 ```ts
-import { WaterfallConfig, WaterfallCell } from 'vue-biu-waterfall/lib'
+import { WaterfallContainer, WaterfallCell } from 'vue-biu-waterfall/lib'
 
 // these two are for ... 
 
@@ -37,20 +37,20 @@ const reflowed = ...
 ### template structure
 
 ```html
-    <WaterfallConfig  @scrollToBottom="reflow" @allThingDone="reflowed">
+    <WaterfallContainer  @scrollToBottom="reflow" @allThingDone="reflowed">
       <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
         <div>
            <!-- {{ item.lalala }}  -->
            <!-- and you can put more things in this div, such as <img src="item.url">...... -->
         </div>
       </WaterfallCell>
-    </WaterfallConfig>
+    </WaterfallContainer>
 
 ```
 
 ## Props
 
-### waterfallConfig
+### WaterfallContainer
 
 Name | Default | Description
 ---- | ---- | ----
@@ -61,7 +61,7 @@ single-max-width | --- |The maximal width of slot which is single in horizontal 
 watch | ---- | Watch something, reflow when it changes.
 interval | ---- | The minimal time interval (ms) between reflow actions.
 
-these props are for computing a layout,I have given a suitable [default config](./lib/WaterfallConfig.vue), but you can check [this function](./lib/utils/calculate.ts) to know how it works exactly, and try out your own config.
+these props are for computing a layout,I have given a suitable [default config](./lib/WaterfallContainer.vue), but you can check [this function](./lib/utils/calculate.ts) to know how it works exactly, and try out your own config.
 
 ### waterfallCell
 
