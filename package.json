@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^3.2.41"
   },
   "devDependencies": {
