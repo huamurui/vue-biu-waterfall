@@ -1,68 +1,58 @@
 <script setup lang="ts">
+import { computed, inject, onBeforeUnmount, onMounted, onUpdated, ref, shallowRef } from 'vue'
+import type { CSSProperties } from 'vue'
+import type { WaterfallCellProps } from './component-types'
+import type { WaterfallRect } from './types'
+import { waterfallKey } from './context'
 
-import { mediatorRects, getRect } from "./stores/useWaterStore";
-import { watch, onMounted, ref } from 'vue'
-const props = defineProps<{
-  waterCell: WaterfallCell
-}>()
-
-
-let metaRect = {
-  index: props.waterCell.index,
-  width: props.waterCell.width,
-  height: props.waterCell.height,
-  style: {}
+const props = defineProps<WaterfallCellProps>()
+const context = inject(waterfallKey)
+if (!context) {
+  throw new Error('[vue-biu-waterfall] WaterfallCell must be inside WaterfallContainer.')
 }
-getRect(metaRect)
-let adaptedRect = mediatorRects[metaRect.index]
-watch(() => adaptedRect.width, () => {
-  props.waterCell.style.height = adaptedRect.height + 'px'
-  props.waterCell.style.width = adaptedRect.width + 'px'
-  props.waterCell.style.left = adaptedRect.left + 'px'
-  props.waterCell.style.top = adaptedRect.top + 'px'
+const { columnWidth, register, reflow } = context
+const element = ref<HTMLElement>()
+const rect = shallowRef<WaterfallRect>()
+const style = computed<CSSProperties>(() => {
+  const width = columnWidth.value
+  const fixedRatio = Number.isFinite(props.width) && Number.isFinite(props.height)
+    && props.width! > 0 && props.height! > 0
+  return {
+    width: width === undefined ? '100%' : `${width}px`,
+    height: fixedRatio && width !== undefined ? `${width * props.height! / props.width!}px` : undefined,
+    aspectRatio: fixedRatio ? `${props.width} / ${props.height}` : undefined,
+    position: rect.value ? 'absolute' : 'relative',
+    left: rect.value ? '0' : undefined,
+    top: rect.value ? '0' : undefined,
+    transform: rect.value ? `translate(${rect.value.left}px, ${rect.value.top}px)` : undefined,
+  }
 })
 
-//https://cn.vuejs.org/guide/essentials/class-and-style.html
-//https://cn.vuejs.org/guide/built-ins/transition.html
-//https://cn.vuejs.org/guide/built-ins/transition.html#the-transition-component
-// this might be what you need
-let readyToGo = ref(false)
+let unregister: (() => void) | undefined
 onMounted(() => {
-  readyToGo.value = true
+  unregister = register({
+    element: element.value!,
+    setRect(next) {
+      const previous = rect.value
+      if (!previous || Object.keys(next).some(key => next[key as keyof WaterfallRect] !== previous[key as keyof WaterfallRect])) {
+        rect.value = next
+      }
+    },
+  })
 })
-
+// Covers keyed reordering, prop updates and slot updates even without ResizeObserver.
+onUpdated(reflow)
+onBeforeUnmount(() => unregister?.())
 </script>
 
 <template>
-  <Transition name="cell">
-    <div v-if="readyToGo" :style="props.waterCell.style" class="cell">
-      <slot></slot>
-    </div>
-  </Transition>
+  <div ref="element" class="biu-waterfall-cell" :style="style"><slot /></div>
 </template>
 
-<style scoped>
-/* cell */
-
-.cell {
-  position: absolute;
-  transition:
-    opacity 1s ease-in-out,
-    box-shadow 300ms ease-in-out,
-    left 700ms ease-in-out,
-    top 700ms ease-in-out,
-    transform 700ms ease-in-out;
-}
-
-.cell-enter-active {
-  transform: scale(0.5);
-}
-
-.cell-enter-to {
-  transform: scale(1);
-}
-
-.shadow {
-  visibility: hidden;
+<style>
+:where(.biu-waterfall-cell) {
+  box-sizing: border-box;
+  display: flow-root;
+  min-width: 0;
 }
 </style>

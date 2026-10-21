@@ -1,25 +1,37 @@
 {
   "name": "vue-biu-waterfall",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "type": "module",
-  "description": "a waterfall layout based on vue3 and ts",
+  "description": "Responsive, content-aware masonry layout components for Vue 3",
   "files": [
-    "/lib"
+    "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run typecheck && vite build && npm run build:types",
+    "build:types": "vue-tsc -p tsconfig.build.json && rollup --config rollup.types.config.mjs",
+    "build:demo": "vite build --config vite.demo.config.ts",
+    "preview": "vite preview --config vite.demo.config.ts",
+    "typecheck": "vue-tsc --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepack": "npm run build"
   },
   "peerDependencies": {
-    "vue": "^3.2.41"
+    "vue": "^3.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.2.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.2.3",
-    "vue-tsc": "^1.0.9"
+    "@types/node": "^22.19.0",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "@vue/test-utils": "2.4.6",
+    "jsdom": "^29.1.1",
+    "rollup": "^4.64.12",
+    "rollup-plugin-dts": "^6.5.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.7",
+    "vitest": "^5.0.5",
+    "vue": "^3.5.44",
+    "vue-tsc": "^3.3.13"
   },
   "repository": {
     "type": "git",
@@ -36,5 +48,25 @@
     "pinterest"
   ],
   "author": "huamurui",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./style.css": "./dist/style.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
 }

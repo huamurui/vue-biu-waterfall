@@ -1,34 +1,33 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "strict": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": [
-      "ESNext",
-      "DOM"
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "vite/client",
+      "node"
     ],
     "skipLibCheck": true,
     "noEmit": true
   },
   "include": [
-    "demo/**/*.ts",
-    "demo/**/*.d.ts",
-    "demo/**/*.tsx",
-    "demo/**/*.vue",
     "lib/**/*.ts",
-    "lib/**/*.d.ts",
-    "lib/**/*.tsx",
-    "lib/**/*.vue"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
+    "lib/**/*.vue",
+    "demo/**/*.ts",
+    "demo/**/*.vue",
+    "demo2/**/*.ts",
+    "demo2/**/*.vue",
+    "tests/**/*.ts"
   ]
 }

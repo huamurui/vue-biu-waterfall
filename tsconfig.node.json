@@ -1,12 +1,16 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "composite": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true
+    "lib": [
+      "ES2022"
+    ],
+    "types": [
+      "node"
+    ]
   },
   "include": [
-    "vite.config.ts"
+    "vite.config.ts",
+    "vite.demo.config.ts",
+    "vitest.config.ts"
   ]
 }

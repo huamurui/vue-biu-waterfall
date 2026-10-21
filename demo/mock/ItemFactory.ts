@@ -1,41 +1,35 @@
-let ItemFactory = (function () {
+export interface DemoItem {
+  id: number
+  title: string
+  color: string
+  accent: string
+  shape: 'orbit' | 'arch' | 'steps' | 'sun'
+  artworkHeight: number
+}
 
-  let lastIndex = 0
+const themes = [
+  { title: '轨道', color: '#ecf3df', accent: '#536b37', shape: 'orbit' },
+  { title: '拱门', color: '#f7eadc', accent: '#ad6c39', shape: 'arch' },
+  { title: '台阶', color: '#e6eaf6', accent: '#6474ad', shape: 'steps' },
+  { title: '日落', color: '#f6e4df', accent: '#b76e5e', shape: 'sun' },
+  { title: '青影', color: '#e1efec', accent: '#488278', shape: 'arch' },
+  { title: '环绕', color: '#eee6f0', accent: '#946ca0', shape: 'orbit' },
+] as const
 
-  function generateRandomItems(count: number) {
-    let items = [], i
-    for (i = 0; i < count; i++) {
-      items[i] = {
-        index: lastIndex++,
-        style: {
-          background: getRandomColor()
-        },
-        width: 150 + ~~(Math.random() * 50),
-        height: 220 + ~~(Math.random() * 50)
-      }
-    }
-    return items
-  }
-
-  function getRandomColor() {
-    let colors = [
-      '#FFF68F',
-      '#E6E6FA',
-      // '#00F5FF',
-      'rgba(245,163,59,.5)',
-      'rgba(255,230,135,.5)',
-      'rgba(194,217,78,.5)',
-      'rgba(195,123,177,.5)',
-      'rgba(125,205,244,.5)',
-      '#ffcccc',
-      'skyblue'
-    ]
-    return colors[~~(Math.random() * colors.length)]
-  }
-
+export function createItemFactory() {
+  let nextId = 1
   return {
-    get: generateRandomItems
+    get(count: number): DemoItem[] {
+      return Array.from({ length: count }, () => {
+        const id = nextId++
+        return {
+          id,
+          ...themes[(id - 1) % themes.length],
+          artworkHeight: 120 + ((id * 37) % 110),
+        }
+      })
+    },
   }
+}
 
-})()
-export default ItemFactory
+export default createItemFactory()

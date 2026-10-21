@@ -1,48 +1,40 @@
-//here is a demo of how to use the component
 <script setup lang="ts">
+import { ref } from 'vue'
+import { WaterfallCell, WaterfallContainer } from '../lib'
+import { createImageFactory } from './mock/ImageCenter'
 
-import { WaterfallContainer, WaterfallCell } from '../lib'
-import ImageCenter from './mock/ImageCenter'
-import { reactive, onMounted } from 'vue'
-
-let items: any = reactive([])
-onMounted(async () => {
-  items.push(...await ImageCenter.get(16))
-})
-
-let isReflowing = false
-const reflow = async (columnCount) => {
-  if (!isReflowing) {
-    isReflowing = true
-    items.push(...await ImageCenter.get(columnCount))
-  }
-}
-
-const reflowed = () => {
-  isReflowing = false
-}
-
+const imageFactory = createImageFactory()
+const images = ref(imageFactory.get(6))
 </script>
 
 <template>
-  <div>
-    <WaterfallContainer @scrollToBottom="reflow" @allThingDone="reflowed">
-      <WaterfallCell :waterCell="item" v-for="item in items" :key="item.index">
-        <img :src="item.url" class="cell" />
+  <section class="gallery-demo" aria-labelledby="gallery-title">
+    <h2 id="gallery-title">图片</h2>
+    <WaterfallContainer :column-width="110" :gap="10" :has-more="false">
+      <WaterfallCell
+        v-for="image in images"
+        :key="image.id"
+        :width="image.width"
+        :height="image.height"
+        class="gallery-cell"
+      >
+        <img
+          :src="image.url"
+          :alt="image.description"
+          :width="image.width"
+          :height="image.height"
+        />
       </WaterfallCell>
     </WaterfallContainer>
-  </div>
+    <button type="button" class="gallery-button" aria-label="倒序图片" @click="images.reverse()">倒序 <span aria-hidden="true">↔</span></button>
+  </section>
 </template>
 
 <style scoped>
-.cell {
-  height: 98%;
-  width: 98%;
-  border-radius: 8px;
-  display: flex;
-  /* 垂直居中 */
-  align-items: center;
-  /* 水平居中 */
-  justify-content: center;
-}
+.gallery-demo { padding: 22px; border: 1px solid #e4e5dd; border-radius: 18px; background: #fff; }
+h2 { margin: 0 0 18px; font-size: 16px; line-height: 1.5; font-weight: 600; }
+.gallery-cell { border-radius: 10px; overflow: hidden; }
+.gallery-cell img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gallery-button { margin-top: 20px; display: flex; width: 100%; align-items: center; justify-content: space-between; padding: 11px 0 0; border: 0; border-top: 1px solid #eeeee8; background: transparent; color: #5d694a; font: inherit; font-size: 12px; cursor: pointer; }
+.gallery-button:hover { color: #253c17; }
 </style>
